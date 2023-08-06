@@ -1,2 +1,3 @@
 # Interview-prep-notes
-Interview prep notes for coding/stats 
+My personal interview prep notes for coding/stats 
+
