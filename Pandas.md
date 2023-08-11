@@ -92,3 +92,37 @@ bool1 & bool2[['A','B']] #first pick ['A','B'] from bool2 and form a sub-array, 
 
 
 
+1.DataFrame construction
+
+```python
+# construct with index array, columns array and data matrix
+index = ['0811','0812','0813']
+columns = ['David','Eldon','Jade','Cage']
+data = [[0.5, 0.3, 0.2, 0.1],
+        [0.6, 0.4, 0.5, 1.0],
+        [0.1, 0.5, 2.0, 3.0]]
+df = pd.DataFrame(data, index = index, columns = columns)
+
+# construct from DICTIONARY with EQUAL LENGTH lists/ Numpy Arrays
+data = {'David':[0.5,0.6,0.1],
+        'Eldon':[0.6,0.4,1.0],
+        'Jade':[0.2,0.5,2.0],
+        'Cage':[0.1,1.0,3.0]
+}
+index = ['0811','0812','0813']
+df = pd.DataFrame(data, index = index)
+
+# construct from DICTIONARY of pd.Series
+index = ['0811','0812','0813']
+data = {}
+data['David'] = pd.Series([0.5,0.6,0.1],index=index)
+data['Eldon'] = pd.Series([0.6,0.4,1.0],index=index)
+df = pd.DataFrame(data)
+
+# Adding columns to pd.DataFrame (like dictionary)
+df = pd.DataFrame()
+index = ['0811','0812','0813']
+df['David'] = pd.Series([0.5,0.6,0.1],index=index)
+df['Eldon'] = pd.Series([0.6,0.4,1.0],index=index)
+```
+
