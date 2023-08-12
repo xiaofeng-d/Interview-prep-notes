@@ -126,3 +126,14 @@ df['David'] = pd.Series([0.5,0.6,0.1],index=index)
 df['Eldon'] = pd.Series([0.6,0.4,1.0],index=index)
 ```
 
+2.DataFrame
+
+```python
+# get data
+df.values  # Return 2-d array
+# get columns
+df.columns # Return Index object
+# get rows
+df.index #return Index object
+```
+
