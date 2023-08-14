@@ -233,5 +233,20 @@ df.apply(max_min, axis=1)
 def max_min(se):
   return pd.Series([se.min(),se.max()],index=['min','max'])
 df.apply(max_min) # -> get a dataframe
+
+# df.mean() average for each column 
+df.mean()
+df.mean(axis=1) # average for each row/read
+
+# use these built-in methods to make code concise and readale
+
+df.rank(axis=1) 
+df.cumsum() #cumulative sums ALONG the COLUMN
+
+df.describe() # returns a new DATAFRAME
+
+# built-in correlation and covariance
+df.corr() # correlation of COLUMNS with each other by default
+
 ```
 
