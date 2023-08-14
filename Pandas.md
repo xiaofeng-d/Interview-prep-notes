@@ -1,6 +1,6 @@
 ## Pandas Series
 
-1.Creating Series:
+### 1.Creating Series:
 
 ```python
 import pandas as pd
@@ -24,7 +24,7 @@ se = pd.Series(list)
 
 ```
 
-2.Series Operations
+### 2.Series Operations
 
 ```python
 # Scalar Arithmetic
@@ -45,7 +45,7 @@ se.map(threshold)
 se.map(lambda x: if x > 0.5 else 0.5)
 ```
 
-3.built-in functions
+### 3.built-in functions
 
 ```python
 # average
@@ -64,7 +64,7 @@ se.describe()
 se.rank() 
 ```
 
-4.Series alignment
+### 4.Series alignment
 
 ```python
 # adding values of corresponding indices
@@ -92,7 +92,7 @@ bool1 & bool2[['A','B']] #first pick ['A','B'] from bool2 and form a sub-array, 
 
 
 
-1.DataFrame construction
+### 1.DataFrame construction
 
 ```python
 # construct with index array, columns array and data matrix
@@ -126,7 +126,7 @@ df['David'] = pd.Series([0.5,0.6,0.1],index=index)
 df['Eldon'] = pd.Series([0.6,0.4,1.0],index=index)
 ```
 
-2.DataFrame retrieve values
+### 2.DataFrame retrieve values
 
 ```python
 # get data
@@ -172,7 +172,7 @@ df[df<0] # returns NaN for selected False values
 
 ```
 
-3.DataFrame : change values
+### 3.DataFrame : change values
 
 ```python
 # set column to scalar   
@@ -197,7 +197,7 @@ df['NEWCOLUMN'] = [0.5,0.2,0.3]
 df.loc['0814'] = [-0.01, 0.015, 0.03, 0.05, -0.01]
 ```
 
-4.DataFrame Methods
+### 4.DataFrame Methods
 
 ```python
 # arithmetic
@@ -246,7 +246,17 @@ df.cumsum() #cumulative sums ALONG the COLUMN
 df.describe() # returns a new DATAFRAME
 
 # built-in correlation and covariance
-df.corr() # correlation of COLUMNS with each other by default
+df.corr() # correlation matrix of COLUMNS with each other by default
+df.cov() # covariance matrix
+ref_arr = pd.Series([0.01, 0.02, 0.03, 0.04], index=['0811', '0812', '0813'])
+df.corrwith(ref_arr) # -> array of each column's correlation
+```
 
+5.DataFrame alignment
+
+```python
+# missing values will be NaN
+df1 + df3
+df1.add(df3, fill_value=0)
 ```
 
