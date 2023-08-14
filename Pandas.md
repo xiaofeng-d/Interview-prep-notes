@@ -126,7 +126,7 @@ df['David'] = pd.Series([0.5,0.6,0.1],index=index)
 df['Eldon'] = pd.Series([0.6,0.4,1.0],index=index)
 ```
 
-2.DataFrame
+2.DataFrame retrieve values
 
 ```python
 # get data
@@ -135,5 +135,103 @@ df.values  # Return 2-d array
 df.columns # Return Index object
 # get rows
 df.index #return Index object
+
+# get a column, return a Series
+df['David']
+# to get row, need .loc, returns a Series
+df.loc['0811'] # returns a row
+
+# can do normal series indexing with those:
+df['David']['0811']
+df.loc['0811']['David']
+
+# Easier to use loc method directly
+df.loc['0811','David'] #similar to 2d numpy array
+
+# Multiple rows & columns -> Subset of df
+df.loc[['0811','0812'],['David','Eldon']]
+
+# slicing with loc
+df.loc['0811':'0813','David']
+df.loc['0811':'0813','David':'Jade'] # returns a dataframe
+
+# boolean logic within loc
+df.loc[df['David']>0, : ]
+df.loc[df['David']>0, ['David','Jade']]
+
+# df['David']>0 returns a series boolean, specifying which rows are selected; ['David','Jade'] specifies the columns
+
+# column boolean selects rows
+# can also select columns
+df.loc[:, df.loc['0811']>0]
+# can also not use loc for this, easier way to write
+df[df['David']>0]
+
+# df < 0 returns a boolean dataframe
+df[df<0] # returns NaN for selected False values
+
+```
+
+3.DataFrame : change values
+
+```python
+# set column to scalar   
+df['David'] = 0
+df.loc[df['David']<0,'David']=0
+
+# set column to list, has to be SAME DIMENSION! 
+df['David'] = [0.05, 0.2, 1.0]
+
+# set column using series -> automatically aligns
+jade = pd.Series({'0811':3, '0812':5})
+# DOSEN't have to be same dimension; missing values -> NAN
+df['Jade'] = jade
+
+# can set subset of df as 2-d list
+df.loc[['0811','0812'],['David','Jade']] = [[0.01, 0.02],[-0.02,0.03]]
+
+# create a new column
+df['NEWCOLUMN'] = [0.5,0.2,0.3]
+
+# create a new row
+df.loc['0814'] = [-0.01, 0.015, 0.03, 0.05, -0.01]
+```
+
+4.DataFrame Methods
+
+```python
+# arithmetic
+base = 0.5
+df - 0.5
+# boolean element-wise
+df > 0
+# numpy universal functions: element-wise
+np.abs(df)
+
+# applymap, same as Series 'map'
+
+def threshold(x):
+  if np.abs(x) > 0.005:
+    return x
+  else:
+    return 0
+df.applymap(threshold)
+
+# apply: apply function to each column of dataframe
+
+def max_min(se):
+  return se.max() - se.min()
+max_min(df['David']) # -> get a number
+
+# apply function to each column
+df.apply(max_min) # -> will get a number for each column. end result is a series
+
+# apply function to each row
+df.apply(max_min, axis=1)
+
+## if the function returns a SERIES (not number), then applying this to each column will end up being a dataframe
+def max_min(se):
+  return pd.Series([se.min(),se.max()],index=['min','max'])
+df.apply(max_min) # -> get a dataframe
 ```
 
