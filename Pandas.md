@@ -257,6 +257,44 @@ df.corrwith(ref_arr) # -> array of each column's correlation
 ```python
 # missing values will be NaN
 df1 + df3
+
+# if don't want NaN
 df1.add(df3, fill_value=0)
+
+# gives TRUE or FALSE results
+df1 > df2
+(df1>0) & (df2>0)
+
+(df1>0) | (df2>0)
+
+# Series and Dataframe operations:
+
+se = pd.Series({'David':100, 'Jade':20, 'Eldon':50})
+df1 * se
+# by default it matches the index of series on columns; otherwise NaN
+
+se2 = pd.Series({'0811':100, '0812':20, '0813':50})
+df1.mul(se2, axis = 0)  # multiply by row
+
+```
+
+## Missing Data
+
+```python
+# numpy represents missing data by np.nan 
+nan = np.nan
+
+pd.isnull(nan) # -> True
+se.isnull() # every element missing or not
+se.count() # number of non-NaN values
+
+# getting RID of missing values?
+se[se.notnull()] # 
+se.dropna() # easier way
+se.dropna(how = 'all') # drop rows with ALL NaNs 
+se.dropna(thresh = 3) # drop rows with <3 normal values
+se.dropna(axis=1, thresh = 3) # drop COLUMNS with <3 normal values
+
+# filling missing data
 ```
 
