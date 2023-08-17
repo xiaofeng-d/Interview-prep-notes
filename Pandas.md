@@ -278,7 +278,7 @@ df1.mul(se2, axis = 0)  # multiply by row
 
 ```
 
-## Missing Data
+### 5.Missing Data (NaN) 的处理
 
 ```python
 # numpy represents missing data by np.nan 
@@ -289,12 +289,50 @@ se.isnull() # every element missing or not
 se.count() # number of non-NaN values
 
 # getting RID of missing values?
-se[se.notnull()] # 
+se[se.notnull()] # too complex
 se.dropna() # easier way
-se.dropna(how = 'all') # drop rows with ALL NaNs 
+
+# dataframe dropna: by default drops any row containing NaN
+
+df.dropna() # default
+df.dropna(how = 'all') # drop rows with ALL NaNs, preserve others 
+
 se.dropna(thresh = 3) # drop rows with <3 normal values
 se.dropna(axis=1, thresh = 3) # drop COLUMNS with <3 normal values
 
+
+
 # filling missing data
+se.fillna(0) # 用0填充
+df.fillna({'David':0.02, 'Eldon':0.05}) #每个column用不同填充,如果没有写该column则不填充
+
+# Pandas的built in functions会自动忽略NaN,这点和numpy不同
+
+df.mean() # 含有NaN的column会自动忽略
+df.fillna(0).sum()/df.count()  #和上面的方法等价
+
+np.mean(df.values,axis=1) # numpy不会自动忽略NaN,所以含有NaN的会变成NaN。 axis=1 得到每行的平均，axis=0得到每列的平均值
+
+df.rank() #也会自动忽略NaN的部分，默认是每一column给出rank
+
+```
+
+### 6.Reindexing Sorting
+
+```python
+# re-order existing index / adding new values
+se.reindex(['Eldon','Jade','John','David'])  # 新的index会自动加入，数据NaN
+
+# exclude entries
+se.drop('David')
+
+#Dataframe的reindexing类似,可以重排序并加入新的index
+new_index = ['0815','0816','0817','0818']
+df.reindex(new_index) ##
+new_columns = ['David','Jade','Jack','Eldon']
+df.reindex(new_index, columns = new_columns )
+
+# Dataframe drop: 默认row, 如果drop column需要多加一个
+
 ```
 
