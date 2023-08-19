@@ -336,3 +336,30 @@ df.reindex(new_index, columns = new_columns )
 
 ```
 
+## Notes
+
+1.df['product_id']
+
+df['product_id'] 和 df[['product_id']]的区别：前面是series，后面是dataframe。多了一个括号的区别！
+
+2.Pandas中表示Logical Not的符号是~
+
+3.如何用or操作：
+
+```python
+import pandas as pd
+
+#create DataFrame
+df = pd.DataFrame({'team': ['A', 'A', 'B', 'B', 'B', 'B', 'C', 'C'],
+                   'points': [25, 12, 15, 14, 19, 23, 25, 29],
+                   'assists': [5, 7, 7, 9, 12, 9, 9, 4],
+                   'rebounds': [11, 8, 10, 6, 6, 5, 9, 12]})
+
+#view DataFrame
+print(df)
+```
+
+```python
+#filter rows where points > 20 or assists = 9
+df[(df.points > 20) | (df.assists == 9)]
+```
