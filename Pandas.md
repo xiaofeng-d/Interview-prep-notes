@@ -333,8 +333,158 @@ new_columns = ['David','Jade','Jack','Eldon']
 df.reindex(new_index, columns = new_columns )
 
 # Dataframe drop: 默认row, 如果drop column需要多加一个
+se.sort_index() # 按照index排序series
+se.sort_index(ascending = False ) # 按照descending顺序
+
+df.sort_index()
+df.sort_index(axis=1, ascending = False) #columns的名字按照descending排序
+df.sort_values(['David','Jade']) #如果有多个column，可以依次按照这个排序
+```
+
+### 7.Plotting
+
+```python
+df = pd.DataFrame(index=['0811','0812','0813','0814'])
+df['X'] = [1, 2, 3, 4]
+df['Y'] = [2, 3, 4, 5]
+df['Z'] = [0.5, 0.2, 0.4, 0.1]
+
+df['X'].plot(title='X plot') # 画一条线
+df.plot(title='DataFrame Line Plot', style='-*') # 画每一个column的一条线]
+
+df.plot(kind='bar', title='DataFrame Line Plot', style='-*') # 画bar plot
+
+# 画heatmap，常用于画correlation matrix
+import seaborn as sns
+sns.heatmap(df.corr(),annot=True)
+```
+
+### 8.Categorical Data
+
+```python
+# sector information
+se = pd.Series({'AAPL':'Tech', 'XOM':'Energy', 'MSFT':'Tech', 'GS':'Financials'})
+se.unique()
+
+se.value_counts()
+mask = se.isin(['Financials','Tech']) #产生一个mask数组，boolean表明每个index是否属于这个范畴或者不属于
+se[mask]
+pd.get_dummies(se) # 产生一个dataframe，可用作多元回归 indicator variables
 
 ```
+
+### 9.MultiIndexing
+
+当有好几张类似的表时，同时操纵它们不太方便。可以先存成一个dictionary，然后用 pd.concat( ) 收纳成一个multi-indexing的dataframe
+
+```python
+multi.loc['pe'] # 通过最外层的index，返回相应的dataframe
+multi_se = multi['SPY'] # 如果用列直接调用列，得到的是一个 multi-index series.
+multi_se['pe'] #得到一个series
+multi_se.unstack(level=0) #可以把它变回去一个dataframe
+multi_se.unstack(level=0).stack() #可以再revert回去成一个multi-index series
+
+
+```
+
+multi也支持 mean(), sum()等等methods，其返回的结果均较为intuitive。
+
+## Other Pandas Topics
+
+### Pandas File I/O:
+
+```python
+# 转换为csv
+
+df.to_csv('df_example.csv', index_label='Date') #原来的index没有名字，给index起了一个名字
+data = pd.read_csv('df_example.csv') #读入的csv文件有专门的Date列
+data.set_index('Date') # 将Date列转换回index列，这样写更简便
+
+# 转换为excel
+data = pd.read_excel('df_example.xlsx')
+
+df.to_pickle('df_exmaple.pk')
+pd.read_pickle('df_example.pk')
+
+# csv和excel方便在excel中打开，pkl格式适合在python中重新读取使用
+```
+
+### Time Series Data
+
+```python
+import pandas as pd
+import numpy as np
+dt = '20230107' # 也可以用不同格式，'2011-01-07'等等
+dt = pd.to_datetime(dt)
+
+dt.year
+dt.month
+dt.minute
+dt.second
+
+# 在一周中的第几天 Return the day of the week. It is assumed the week starts on Monday, which is denoted by 0 and ends on Sunday which is denoted by 6
+dt.weekday()
+
+dt + pd.tseries.offsets.Day()
+dt + pd.tseries.offsets.BDay() # 只加business day
+
+# ro l l forward, backward
+print(pd.tseries.offsets.MonthEnd().rollforward(dt)) #下一个月底
+print(pd.tseries.offsets.MonthEnd().rollback(dt)) #上一个月底
+
+# subtract two times
+dt1 = pd.to_datetime('20230107')
+dt2 = pd.to_datetime('20230109')
+diff = dt2 - dt1
+
+diff.days
+
+# 把excel的data快速变成timestamp object的方法
+date = ['20230102',]
+
+# 在date range里获得
+days = pd.date_range(dt1, dt2, freq = 'D')
+
+months = pd.date_range('20230101','20231202', freq='M')
+
+# 'min' for minutes
+# 可以用datetime series作为index建立dataframe
+names = ['David','Eldon','Jade']
+days = pd.date_range('20230101','20230205', freq='min')
+df = pd.DataFrame(np.random.randn(len(days),len(names)),index=days, columns = names)
+
+df.loc['2023-01-01 00:00:00']
+#can pass in the day only, and retrieve that day
+df.loc['2023-01-01]
+       
+# re-sample: 用一定的时间频率来aggregate！
+df.resample('M').sum()
+# 5 minute high
+       df.resample('5min').max()
+# close
+       df.resample('5min').last
+```
+
+### Groupby
+
+Groupby解决当数据表里的data没有按照统一的时间排序，而是按照出现的次序一个一个记录。
+
+```python
+univ = ['AAPL','MSFT','BAC','GS']
+sector = {'AAPL':'Tech','MSFT':'Tech','BAC':'Fin','GS':'Fin'}
+data=[]
+# 制造一个未按时间排序的数据表
+for dt in dates:
+    for x in univ:
+   data.append([x,sector[x],dt,np.random.randn(),np.random.randn()])
+data = pd.DataFrame(data,columns=['ticker','sector','date','signal1','signal2'])
+data
+
+# 按照ticker计算相应的average
+data.groupby('ticker').mean()
+```
+
+
 
 ## Notes
 
