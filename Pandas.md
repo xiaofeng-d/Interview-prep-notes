@@ -482,9 +482,35 @@ data
 
 # 按照ticker计算相应的average
 data.groupby('ticker').mean()
+# 同时按两个group
+data.groupby(['sector','date']).mean()
+data.groupby(['sector','date'])[['signal1']].mean()
+
+# 用apply引入customized function
+def max_minus_min(x):
+    return x.max()-x.min()
+data.groupby(['sector','date'])[['signal1','signal2']].apply(max_minus_min)
+
+# 如果apply函数返回的是dataframe，则结果有不同：
+# return a dataframe instead of a series 
+def demean(x):
+    return x - x.mean()
+
+data.groupby(['sector','date'])[['signal1','signal2']].apply(demean)
+
+# 
+df = data.groupby(['sector','date'])[['signal1','signal2']].mean()
+df.groupby(level=0).mean()
 ```
 
+### Ticker
 
+写法1: df1 = data.set_index(['date','ticker'])['signal1'].unstack(level=1)
+
+写法2:df2 = data.pivot_table(index='date',columns='ticker',values='signal1')
+df2
+
+写法2更为简洁
 
 ## Notes
 
