@@ -512,6 +512,41 @@ df2
 
 写法2更为简洁
 
+
+
+### Rolling
+
+df.rolling().mean()计算rolling average
+
+```python
+df.rolling(252).mean() #注意到252天内的会变成NAN，为了避免，也可以写成
+df.rolling(252, min_periods=1).mean() #前面天数不足的会直接求平均，而不会是NaN
+
+```
+
+### quantiles
+
+​		用qcut函数，按照bin的数量划分成几个bucket：
+https://pandas.pydata.org/docs/reference/api/pandas.qcut.html
+
+```python
+qcut = pd.qcut(df['David'], 10, labels=False) #划分成十个quantile
+
+qcut.value_counts().sort_index()
+
+
+```
+
+### shift
+
+用途1:计算return的时候，df/df.shift() -1
+
+```
+
+```
+
+
+
 ## Notes
 
 1.df['product_id']
