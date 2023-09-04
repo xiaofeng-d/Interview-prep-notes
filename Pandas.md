@@ -574,3 +574,5 @@ print(df)
 #filter rows where points > 20 or assists = 9
 df[(df.points > 20) | (df.assists == 9)]
 ```
+
+4.pandas的true/false的矩阵直接乘1，得到1和0的矩阵。神奇！
