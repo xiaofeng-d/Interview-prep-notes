@@ -576,3 +576,11 @@ df[(df.points > 20) | (df.assists == 9)]
 ```
 
 4.pandas的true/false的矩阵直接乘1，得到1和0的矩阵。神奇！
+
+5.常用的指令：
+
+换columns名称：df.rename(columns = {'author_id':'id'}, inplace = True)
+
+除去重复：df.drop_duplicates(subset=['author_id'], inplace= True)
+
+给值大小排序：df.sort_values(by=['author_id'], inplace = True)
