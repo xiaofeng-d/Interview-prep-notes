@@ -384,6 +384,14 @@ Static Member Function in a class is the function that is declared as static bec
 } 
 
 vector<int> v {4, 1, 3, 5, 2, 3, 1, 7};
+
+// function to sort vector, lambda expression is for sorting in
+// non-increasing order Compiler can make out return type as
+// bool, but shown here just for explanation
+sort(v.begin(), v.end(), [](const int& a, const int& b) -> bool
+{
+    return a > b;
+});
 ```
 
 #### C++ mutable关键字
