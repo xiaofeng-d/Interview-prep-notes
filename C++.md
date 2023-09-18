@@ -290,6 +290,10 @@ int main()
   v.insert(v.begin(), "apple")
   for(auto& element: fruits){
 		cout << element << endl;
+    
+    
+    //vector求和 accumulate(first_index, last_index, initial value of sum)
+    accumulate(v.begin(), v.end(), 0)
 }
 }
 ```
@@ -399,3 +403,11 @@ sort(v.begin(), v.end(), [](const int& a, const int& b) -> bool
 有时候希望class的成员用constant function修改，但是不想让它修改其他成员。
 
 如果把一个function声明为const，那么传给它的this指针就变成const 指针。当一个变量成为mutable的时候，就会允许const pointer改变成员。
+
+#### C++ Greater
+
+The **std::greater** is a functional object which is used for performing comparisons. It is defined as a Function object class for the greater-than inequality comparison. This can be used for changing the functionality of the given function. This can also be used with various standard algorithms such as [sort](https://www.geeksforgeeks.org/sort-c-stl/), [priority queue](https://www.geeksforgeeks.org/priority-queue-set-1-introduction/), etc.
+
+#### C++ malloc
+
+如果malloc分配失败时，返回的是指针形式的空指针。一般更倾向于用NULL表示，和0等价。
