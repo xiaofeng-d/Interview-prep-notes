@@ -279,7 +279,7 @@ C++ strings是 std::string class中的
 
 在前面插入元素：v.insert( v.begin(), "apple" )
 
-vector::begin()回复的是**iterator** pointing to the first element of vector container.
+vector::begin()回复的是**iterator** 指向向量容器里的第一个元素。 pointing to the first element of vector container.
 
 ```c++
 #include<vector>
