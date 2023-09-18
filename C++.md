@@ -192,16 +192,82 @@ int main()
 
 #### C++ Range Based for loop
 
+https://www.geeksforgeeks.org/range-based-loop-c/
+
 C++11的新特性，可以不用写出开头和结尾条件，可读性变得更高。
 
 ```c++
+for ( range_declaration : range_expression ) 
+    loop_statement
+```
+
+```c++
 std::vector<int> vec{1,2,3,4,5,6,7,8,9,10};
-for(auto n: vec)
-  std::cout << n;
+for(auto i: vec)
+  std::cout << i;
+
+// Iterating over whole array
+std::vector<int> v = { 0, 1, 2, 3, 4, 5 };
+for (auto i : v)
+    std::cout << i << ' ';
+
+// the initializer may be a braced-init-list
+for (int n : { 0, 1, 2, 3, 4, 5 })
+    std::cout << n << ' ';
+
+// Iterating over array
+int a[] = { 0, 1, 2, 3, 4, 5 };
+for (int n : a)
+    std::cout << n << ' ';
+
+// Just running a loop for every array
+// element
+for (int n : a)
+    std::cout << "In loop" << ' ';
+
+// Printing string characters
+std::string str = "Geeks";
+for (char c : str)
+    std::cout << c << ' ';
+
+// Printing keys and values of a map
+std::map<int, int> MAP(
+    { { 1, 1 }, { 2, 2 }, { 3, 3 } });
+for (auto i : MAP)
+    std::cout << '{' << i.first << ", " << i.second
+              << "}\n";
+}
+
+```
+
+对比常见写法：
+
+
+
+```c++
+std::vector<int> vec{1,2,3,4,5,6,7,8,9,10};
+for(int i=0; i<10; i++)
+  std::cout << vec[i];
   
 ```
 
+C++ 17新特性：
 
+```c++
+for (auto& [key, value]: myMap) {
+    cout << key << " has value " << value << std::endl;
+}
+```
+
+
+
+#### C++ String
+
+![Strings in C++](https://media.geeksforgeeks.org/wp-content/uploads/20221229144929/Strings-in-Cpp.png)
+
+C style strings是array of characters, 最后用 '\0'结束。
+
+C++ strings是 std::string class中的
 
 #### C++ Vectors
 
@@ -228,3 +294,100 @@ int main()
 }
 ```
 
+#### C++字典的用法
+
+unordered_map
+
+注意内建的hash function无法hash的一些数据结构：pair是无法用默认hash函数直接hash，除非自己定义一个hash function for pair。
+
+
+
+```c++
+#include <unordered_map>
+
+unordered_map<string, int> umap;
+umap["GeeksforGeeks"] = 10;
+uamp["Contribute"] = 20;
+umap["Practice"] = 30;
+
+// 遍历
+for (auto x : umap)
+  cout << x.first << " " << 
+  			x.second << endl;
+
+//相关函数
+//查找一个key, find，问是否能找到
+if( umap.find(key) == umap.end())
+  cout << key << " not found " ;
+//查找一个key, count，问找不找得到
+if ( umap.count(key) == 0  )
+  cout << key << " not found " ;
+//
+
+//传统写法，用iterator遍历
+  unordered_map<string, int>:: iterator p;
+  for (p = wordFreq.begin(); 
+       p != wordFreq.end(); p++)
+    cout << "(" << p->first << ", " <<
+                   p->second << ")\n";
+}
+
+```
+
+
+
+#### C++ pair
+
+```c++
+#include <utility>
+using namespace std;
+pair<int, string> anon_pair;
+anon_pair.first = 17;   //
+anon_pair.second = "seventeen";
+```
+
+用法：
+
+#### C++ priority queue
+
+```c++
+#include <iostream>
+#include <queue>
+
+priority_queue<int> pq;
+
+
+priority_queue <int, vector<int>, greater<int>> gq;
+```
+
+#### Static关键字用于修饰成员函数/成员变量
+
+#### Static Member Function in C++
+
+Static Member Function in a class is the function that is declared as static because of which function attains certain properties as defined below:
+
+- A static member function is independent of any object of the class. 
+- A static member function can be called even if no objects of the class exist.
+- A static member function can also be accessed using the class name through the scope resolution operator.
+- A static member function can access static data members and static member functions inside or outside of the class.
+- Static member functions have a scope inside the class and cannot access the current object pointer.
+- You can also use a static member function to determine how many objects of the class have been created.
+
+#### C++ Lambda Function
+
+格式：
+
+```c++
+[ capture clause ] (parameters) -> return-type  
+{   
+   definition of method   
+} 
+
+vector<int> v {4, 1, 3, 5, 2, 3, 1, 7};
+```
+
+#### C++ mutable关键字
+
+有时候希望class的成员用constant function修改，但是不想让它修改其他成员。
+
+如果把一个function声明为const，那么传给它的this指针就变成const 指针。当一个变量成为mutable的时候，就会允许const pointer改变成员。
