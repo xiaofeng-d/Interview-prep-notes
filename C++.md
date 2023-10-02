@@ -95,6 +95,24 @@ int main() {
 
 ## 杂项笔记
 
+#### 常见data type的存储空间字节数
+
+```c++
+    cout << "Size of char : " << sizeof(char) << endl;
+    cout << "Size of int : " << sizeof(int) << endl;
+    cout << "Size of long : "<< sizeof(long) << endl;
+    cout << "Size of float : "<< sizeof(float) << endl;
+
+//
+Size of char : 1
+Size of int : 4
+Size of long : 8
+Size of float : 4
+
+```
+
+
+
 #### IOTA function的用法
 
 iota是c++ 11引入的函数，希腊语的第九个字母。相当于用value递增的数列给[first, last) 的容器赋值。需要引入<numeric>.

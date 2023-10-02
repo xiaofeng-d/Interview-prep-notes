@@ -584,3 +584,19 @@ df[(df.points > 20) | (df.assists == 9)]
 除去重复：df.drop_duplicates(subset=['author_id'], inplace= True)
 
 给值大小排序：df.sort_values(by=['author_id'], inplace = True)
+
+#### 密集排名
+
+| 成绩 | 顺序排名 (method = 'first' ) | 跳跃排名 (method = 'min') | 密集排名 (method = 'dense') |
+| ---- | ---------------------------- | ------------------------- | --------------------------- |
+| 50   | 1                            | 1                         | 1                           |
+| 30   | 2                            | 2                         | 2                           |
+| 30   | 3                            | 2                         | 2                           |
+| 20   | 4                            | 4                         | 3                           |
+
+df['顺序排名'] = df.成绩.rank(method='first', ascending = False)
+
+df[‘跳跃排名'] = df.成绩.rank(method = 'min', ascending = False)
+
+df[‘密集排名'] = df.成绩.rank(method = 'dense', ascending = False)
+
