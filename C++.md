@@ -429,3 +429,78 @@ The **std::greater** is a functional object which is used for performing compari
 #### C++ malloc
 
 如果malloc分配失败时，返回的是指针形式的空指针。一般更倾向于用NULL表示，和0等价。
+
+#### C++ 二分查找
+
+#include <algoritghm> 
+
+```c++
+ auto itr = lower_bound(dp.begin(), dp.end(), nums[i]);
+ *itr = nums[i];
+```
+
+
+
+##### binary_search: 查找某个元素是否出现。
+
+binary_search(arr[ ], arr[ ]+size, indx)
+
+arr[ ]: 数组首地址，size:数组元素个数，indx: 需要查找的值
+
+##### lower_bound：查找第一个大于或者等于某个元素的位置。
+
+lower_bound(arr[ ], arr[ ]+size, indx)
+
+#### C++ vector可以越界？
+
+
+
+#### C++ priority Queue的custom comparator
+
+> https://www.geeksforgeeks.org/custom-comparator-in-priority_queue-in-cpp-stl/
+
+```c++
+priority_queue<data_type, container, comparator> ds;
+```
+
+```c++
+class Compare {
+    public:
+       bool operator()(T a, T b){
+           if(cond){
+               return true;
+           }
+           return false;
+      }
+};
+```
+
+- You should declare a class Compare and overload operator() function.
+
+(In C++, the `operator()` is a special operator that allows an instance of a class to be called as if it were a function. This operator is sometimes referred to as the "function call operator" or simply the "call operator". When you overload the `operator()`, you provide a way for objects of your class to be "invoked" in the same way you would invoke a function.)
+
+ 重载operator()的一个例子：
+
+```c++
+#include <iostream> 
+  class Adder 
+  { private:    
+   int value; 
+   public:    
+   Adder(int v) : value(v) {}     // Overloading the operator()    
+   int operator()(int x) const {        return x + value;    } }; int main() {    Adder add5(5); // This object will add 5 to any number   
+                                                       std::cout << add5(10) << std::endl; // Outputs 15     
+  Adder add10(10); // This object will add 10 to any number    std::cout << add10(10) << std::endl; // Outputs 20 }
+```
+
+In the above example, the `Adder` class has an overloaded `operator()`, which allows objects of the class to be used as if they were functions. The objects `add5` and `add10` are instances of the `Adder` class, and they can be invoked as functions because of the overloaded `operator()`.
+
+
+
+#### unordered_map
+
+unordered_map<int,int> record;
+
+ if(record.find(nums[i])!=record.end()) {}; //找不到
+
+record[ A ] = B; // 赋值

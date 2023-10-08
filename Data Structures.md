@@ -1,6 +1,6 @@
 # 数据结构
 
-### Union Find:
+#### Union Find:
 
 ```python
 class UnionFind:
@@ -34,3 +34,7 @@ class UnionFind:
 
         return True
 ```
+
+#### 二叉树的遍历顺序
+
+pre-order, middle-order, post-order
